@@ -56,6 +56,7 @@ kDitherS = playdate.graphics.image.kDitherTypeScreen
 kDitherB2 = playdate.graphics.image.kDitherTypeBayer2x2
 kDitherB4 = playdate.graphics.image.kDitherTypeBayer4x4
 kDitherB8 = playdate.graphics.image.kDitherTypeBayer8x8
+--TODO: add the specialty dithers, and rename some of these better
 
 -- Easing variables
 kLinear = playdate.easingFunctions.linear
@@ -178,9 +179,9 @@ function _setImageColor(color)
 	end
 end
 
--- Inverse Lerp
-function _inverseLerp(a, b, v)
-	return (v - a)/(b - a)
+-- Inverse Lerp (returns a value of 0.0 - 1.0 based on a of b)
+function _inverseLerp(min, max, value)
+	return (value - min)/(max - min)
 end
 
 -- FUTURE IDEAS
@@ -188,25 +189,32 @@ end
 -- Move this to a github module or something
 -- Something to apply to a static value somewhere and be able to immediately increment/decrement it by some specific interval. like _dynamicValue(5, 0.2) would increment value 5 by +/- 0.2 using some specific keys on keyboard, and then print out the value afterward
 
--- Print a list of all globals
+-- Print a list of all lua globals
 function _printGlobals()
 	for n,v in pairs(_G) do
 		print(n,v)
 	end
 end
 
--- Function to map keys from a table into a new table
-function map(tbl, f)
-		local t = {}
-		for k,v in pairs(tbl) do
-				t[k] = f(v)
-		end
-		return t
+-- Function to map keys from a table into their own new table
+-- TODO, better label "f"
+function _mapKeys(table, f)
+	local t = {}
+	for k,v in pairs(table) do
+			t[k] = f(v)
+	end
+	return t
 end
 
+-- Scale an image to specific pixel width/height
+function _scaleImage(image, newWidth, newHeight)
+	local w, h = image:getSize()
+	local resizedImage = image:scaledImage(math.ceil(newWidth / w), math.ceil(newHeight / h))
+	return resizedImage
+end
 
+-- TODO, make this into a function
 class('FillSprite').extends(playdate.graphics.sprite)
-
 function FillSprite:init(width, height, color)
 	FillSprite.super.init(self)
 	self:setSize(width, height)
