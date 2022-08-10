@@ -54,7 +54,7 @@ kButtonRight = playdate.kButtonRight
 -- Dither variables
 kDitherNone = playdate.graphics.image.kDitherTypeNone
 kDitherDiagonal = playdate.graphics.image.kDitherTypeDiagonalLine
-kDitherVertoca; = playdate.graphics.image.kDitherTypeVerticalLine
+kDitherVertical = playdate.graphics.image.kDitherTypeVerticalLine
 kDitherHorizontal = playdate.graphics.image.kDitherTypeHorizontalLine
 kDitherScreen = playdate.graphics.image.kDitherTypeScreen
 kDitherB2 = playdate.graphics.image.kDitherTypeBayer2x2
